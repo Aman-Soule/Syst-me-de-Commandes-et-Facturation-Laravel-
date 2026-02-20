@@ -8,7 +8,8 @@ Route::get('/', function () {
 });
 
 
-Route::get('/', [BurgerController::class, 'catalogue'])->name('welcome');
+Route::get('/', [BurgerController::class, 'accueil'])->name('welcome');
+Route::get('/clients', [BurgerController::class, 'catalogue'])->name('clients.catalogue');
 
 
 Route::prefix('admin')->group(function () {

@@ -4,13 +4,38 @@
     <div class="bg-gray-100 min-h-screen py-10">
         <div class="container mx-auto px-6">
             <h1 class="text-4xl font-bold text-center text-gray-900 mb-10">
-                🍔 Bienvenue chez ISI BURGER
+                Notre Catalogue
             </h1>
 
+
+            <form method="GET" action="{{ route('clients.catalogue') }}" class="flex justify-center space-x-4 mb-8">
+                <input type="text" name="search" value="{{ request('search') }}"
+                       placeholder="Rechercher un burger..."
+                       class="px-3 py-2 border rounded w-64">
+
+                <select name="disponibilite" class="px-3 py-2 border rounded">
+                    <option value="">-- Disponibilité --</option>
+                    <option value="disponible" {{ request('disponibilite') == 'disponible' ? 'selected' : '' }}>Disponible</option>
+                    <option value="rupture" {{ request('disponibilite') == 'rupture' ? 'selected' : '' }}>Rupture de stock</option>
+                </select>
+
+                <select name="prix" class="px-3 py-2 border rounded">
+                    <option value="">-- Trier par prix --</option>
+                    <option value="asc" {{ request('prix') == 'asc' ? 'selected' : '' }}>Prix croissant</option>
+                    <option value="desc" {{ request('prix') == 'desc' ? 'selected' : '' }}>Prix décroissant</option>
+                </select>
+
+                <button type="submit" class="bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-800">
+                    Filtrer
+                </button>
+            </form>
+
+
+            <!-- Grille des burgers -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @foreach($burgers as $burger)
                     <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                        {{-- Image depuis storage --}}
+
                         <img src="{{ asset('storage/' . $burger->image) }}"
                              alt="{{ $burger->nom }}"
                              class="w-full h-48 object-cover">
@@ -26,19 +51,19 @@
 
                             @if($burger->quantite_stock > 0)
                                 <span class="inline-block mt-2 px-3 py-1 text-sm bg-green-100 text-green-700 rounded-full">
-                                Disponible
-                            </span>
+                                    Disponible
+                                </span>
                             @else
                                 <span class="inline-block mt-2 px-3 py-1 text-sm bg-red-100 text-red-700 rounded-full">
-                                Rupture de stock
-                            </span>
+                                    Rupture de stock
+                                </span>
                             @endif
                         </div>
 
                         <div class="p-4 border-t text-center">
                             @if($burger->quantite_stock > 0)
                                 <a href="#"
-                                   class="bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-900 transition">
+                                   class="bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-800 transition">
                                     Commander
                                 </a>
                             @else
@@ -46,6 +71,12 @@
                                     Indisponible
                                 </button>
                             @endif
+
+                            <!-- Bouton Détails -->
+{{--                            <a href="{{ route('burgers.show', $burger->id) }}"--}}
+{{--                               class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition ml-2">--}}
+{{--                                Détails--}}
+{{--                            </a>--}}
                         </div>
                     </div>
                 @endforeach

@@ -13,12 +13,41 @@ class BurgerController extends Controller
         $burgers = burgers::all();
         return view('admin.burgers.index', compact('burgers'));
     }
-// Côté client
-    public function catalogue()
+    public function accueil()
     {
         $burgers = burgers::where('quantite_stock', '>', 0)->get();
         return view('welcome', compact('burgers'));
     }
+
+    public function catalogue(Request $request)
+    {
+        $query = burgers::query();
+
+        //recherche par nom
+        if ($request->filled('search')) {
+            $search = strtolower($request->search); //Met en majuscule la saisie de l'utilisateur
+            $query->whereRaw('LOWER(nom) LIKE ?', ["%{$search}%"]);
+        }
+
+        //Tri disponibilité
+        if ($request->filled('disponibilite')) {
+            if ($request->disponibilite === 'disponible') {
+                $query->where('quantite_stock', '>', 0);
+            } elseif ($request->disponibilite === 'rupture') {
+                $query->where('quantite_stock', '=', 0);
+            }
+        }
+        //Trie prix
+        if ($request->filled('prix')) {
+            $query->orderBy('prix_unitaire', $request->prix);
+        }
+
+        //Récupération des burgers filtrés
+        $burgers = $query->get();
+
+        return view('clients.catalogue', compact('burgers'));
+    }
+
 
 // Formulaire de création
     public function create()
@@ -87,7 +116,7 @@ class BurgerController extends Controller
     public function destroy(burgers $burger)
     {
         $burger->delete();
-        return redirect()->route('burgers.index')->with('success', 'Burger supprimé avec succès');
+        return redirect()->route('burgers.index');
     }
 }
 
