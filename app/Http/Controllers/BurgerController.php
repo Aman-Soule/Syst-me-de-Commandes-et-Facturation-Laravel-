@@ -93,24 +93,25 @@ class BurgerController extends Controller
             'prix_unitaire' => 'required|numeric',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'description' => 'nullable|string',
-            'quantite_stock' => 'required|integer|min:0',
+            'ajout_stock' => 'nullable|integer|min:0',
         ]);
+
+        $data = $request->only(['nom', 'prix_unitaire', 'description']);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('burgers', 'public');
-            $burger->image = $path;
+            $data['image'] = $request->file('image')->store('burgers', 'public');
         }
+        $burger->update($data);
 
-        $burger->update([
-            'nom' => $request->nom,
-            'prix_unitaire' => $request->prix_unitaire,
-            'description' => $request->description,
-            'quantite_stock' => $request->quantite_stock,
-            'image' => $burger->image,
-        ]);
+        if ($request->filled('ajout_stock')) {
+            $burger->quantite_stock += $request->ajout_stock;
+            $burger->save();
+        }
 
         return redirect()->route('burgers.index')->with('success', 'Burger mis à jour avec succès');
     }
+
+
 
 // Suppression d’un burger
     public function destroy(burgers $burger)
