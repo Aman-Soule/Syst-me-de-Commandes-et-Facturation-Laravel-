@@ -18,4 +18,10 @@ class Commande extends Model
             ->withTimestamps();
     }
 
+    // Relation : une commande peut avoir plusieurs paiements
+    public function paiements()
+    {
+        return $this->hasMany(Paiement::class);
+    }
+
 }

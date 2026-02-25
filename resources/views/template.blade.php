@@ -20,7 +20,7 @@
                 <a href="{{ url('/') }}" class="text-gray-300 hover:text-yellow-500 transition duration-300 font-medium">Accueil</a>
                 <a href="{{route('clients.catalogue')}}" class="text-gray-300 hover:text-yellow-500 transition duration-300 font-medium">Catalogue</a>
                 <a href="#" class="text-gray-300 hover:text-yellow-500 transition duration-300 font-medium">Commandes</a>
-                <a href="{{route('burgers.index')}}" class="text-gray-300 hover:text-yellow-500 transition duration-300 font-medium">Gestion</a>
+                <a href="{{route('admin.dashboard')}}" class="text-gray-300 hover:text-yellow-500 transition duration-300 font-medium">Gestion</a>
             </nav>
         </div>
     </div>

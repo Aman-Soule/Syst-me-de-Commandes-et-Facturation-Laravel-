@@ -11,7 +11,7 @@
             <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
                 <img src="{{ asset('storage/' . $burger->image) }}"
                      alt="{{ $burger->nom }}"
-                     class="w-full h-56 object-cover">
+                     class="w-48 h-48 object-cover mx-auto rounded-md">
 
                 <div class="p-5">
                     <h2 class="text-2xl font-semibold text-gray-900 mb-2">{{ $burger->nom }}</h2>

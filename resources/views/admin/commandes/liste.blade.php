@@ -1,7 +1,6 @@
+@extends('admin/dashboard_template')
 
-@extends('template')
-
-@section('content')
+@section('dashboard-content')
     <div class="bg-gray-100 min-h-screen py-10">
         <div class="container mx-auto px-6">
             <h1 class="text-3xl font-bold text-gray-900 mb-6">Liste des commandes</h1>

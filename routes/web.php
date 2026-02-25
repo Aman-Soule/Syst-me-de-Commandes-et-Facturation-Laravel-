@@ -13,6 +13,8 @@ Route::get('/', function () {
 Route::get('/', [BurgerController::class, 'accueil'])->name('welcome');
 Route::get('/clients', [BurgerController::class, 'catalogue'])->name('clients.catalogue');
 
+// Dashboard admin
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 
 Route::prefix('admin')->group(function () {
     Route::get('/burgers', [BurgerController::class, 'index'])->name('burgers.index');
@@ -23,14 +25,17 @@ Route::prefix('admin')->group(function () {
     Route::delete('/burgers/{burger}', [BurgerController::class, 'destroy'])->name('burgers.destroy');
 });
 
-Route::get('/admin/commandes', [AdminController::class, 'index'])->name('commandes.index');
+Route::get('/admin/commandes', [AdminController::class, 'commandes'])->name('commandes.liste');
+Route::get('/admin/commandes/{commande}/edit', [AdminController::class, 'edit'])->name('commandes.edit');
+Route::put('/admin/commandes/{commande}', [AdminController::class, 'update'])->name('commandes.update');
+Route::delete('/admin/commandes/{commande}', [AdminController::class, 'destroy'])->name('commandes.destroy');
 
 
 // Routes pour les commandes côté clients
-Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
-Route::get('/commandes/create/{burger}', [CommandeController::class, 'create'])->name('commandes.create');
-Route::post('/commandes', [CommandeController::class, 'store'])->name('commandes.store');
-Route::get('/commandes/{commande}', [CommandeController::class, 'show'])->name('commandes.show');
-Route::get('/commandes/{commande}/edit', [CommandeController::class, 'edit'])->name('commandes.edit');
-Route::put('/commandes/{commande}', [CommandeController::class, 'update'])->name('commandes.update');
-Route::delete('/commandes/{commande}', [CommandeController::class, 'destroy'])->name('commandes.destroy');
+//Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
+//Route::get('/commandes/create/{burger}', [CommandeController::class, 'create'])->name('commandes.create');
+//Route::post('/commandes', [CommandeController::class, 'store'])->name('commandes.store');
+//Route::get('/commandes/{commande}', [CommandeController::class, 'show'])->name('commandes.show');
+//Route::get('/commandes/{commande}/edit', [CommandeController::class, 'edit'])->name('commandes.edit');
+//Route::put('/commandes/{commande}', [CommandeController::class, 'update'])->name('commandes.update');
+//Route::delete('/commandes/{commande}', [CommandeController::class, 'destroy'])->name('commandes.destroy');

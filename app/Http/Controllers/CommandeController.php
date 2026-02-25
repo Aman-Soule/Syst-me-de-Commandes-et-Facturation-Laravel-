@@ -17,9 +17,8 @@ class CommandeController extends Controller
         return view('clients.commande', compact('commandes'));
     }
 
-    /**
-     * Affiche le formulaire de création d'une commande pour un burger donné
-     */
+
+
     public function create(burgers $burger)
     {
         return view('clients.commande', compact('burger'));
@@ -68,25 +67,16 @@ class CommandeController extends Controller
             ->with('success', 'Commande créée avec succès');
     }
 
-    /**
-     * Affiche une commande spécifique
-     */
     public function show(Commande $commande)
     {
         return view('clients.liste', compact('commande'));
     }
 
-    /**
-     * Formulaire d'édition d'une commande
-     */
     public function edit(Commande $commande)
     {
         return view('clients.edit', compact('commande'));
     }
 
-    /**
-     * Met à jour une commande
-     */
     public function update(Request $request, Commande $commande)
     {
         $request->validate([
