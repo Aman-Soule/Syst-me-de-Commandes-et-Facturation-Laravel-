@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BurgerController;
+use App\Http\Controllers\CommandeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,3 +22,15 @@ Route::prefix('admin')->group(function () {
     Route::put('/burgers/{burger}', [BurgerController::class, 'update'])->name('burgers.update');
     Route::delete('/burgers/{burger}', [BurgerController::class, 'destroy'])->name('burgers.destroy');
 });
+
+Route::get('/admin/commandes', [AdminController::class, 'index'])->name('commandes.index');
+
+
+// Routes pour les commandes côté clients
+Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
+Route::get('/commandes/create/{burger}', [CommandeController::class, 'create'])->name('commandes.create');
+Route::post('/commandes', [CommandeController::class, 'store'])->name('commandes.store');
+Route::get('/commandes/{commande}', [CommandeController::class, 'show'])->name('commandes.show');
+Route::get('/commandes/{commande}/edit', [CommandeController::class, 'edit'])->name('commandes.edit');
+Route::put('/commandes/{commande}', [CommandeController::class, 'update'])->name('commandes.update');
+Route::delete('/commandes/{commande}', [CommandeController::class, 'destroy'])->name('commandes.destroy');

@@ -11,7 +11,7 @@ class BurgerController extends Controller
     public function index()
     {
         $burgers = burgers::all();
-        return view('admin.burgers.index', compact('burgers'));
+        return view('admin.burgers.stock', compact('burgers'));
     }
     public function accueil()
     {
