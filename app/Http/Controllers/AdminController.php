@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Commande;
 use App\Models\burgers;
 use App\Models\Paiement;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\DomPDF\Facade\Pdf as PDFFacade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -130,17 +132,83 @@ class AdminController extends Controller
 
     public function update(Request $request, Commande $commande)
     {
-        // Validation : on ne change que le statut
-        $request->validate(['statut' => 'required|in:en_attente,en_preparation,prete',]);
-        // Mise à jour du statut
-        $commande->statut = $request->statut;
-        $commande->save();
-        //Génération du paiement uniquement si la commande est marquée "prete"
-        if ($commande->statut === 'prete') {
-            Paiement::create(['commande_id' => $commande->id, 'montant' => $commande->total,
+        //Validation
+        $request->validate([
+            'statut' => 'required|in:en_attente,en_preparation,prete,payee',
+        ]);
 
-                'date_paiement' => now(),]);
+        $ancienStatut  = $commande->statut;
+        $nouveauStatut = $request->statut;
+
+
+        $commande->statut = $nouveauStatut;
+        $commande->save();
+
+        // 3. Passage à pret génération  de la facture PDF
+        if ($nouveauStatut === 'prete' && $ancienStatut !== 'prete') {
+            $this->genererFacturePdf($commande);
         }
-        return redirect()->route('commandes.liste') ->with('success', 'Statut de la commande mis à jour avec succès.');
+
+        // 4. Passage à "payee" → enregistrement du paiement (sans doublon)
+        if ($nouveauStatut === 'payee' && $ancienStatut !== 'payee') {
+            // Vérifie qu'aucun paiement n'existe déjà pour cette commande
+            $paiementExistant = Paiement::where('commande_id', $commande->id)->first();
+
+            if (! $paiementExistant) {
+                Paiement::create([
+                    'commande_id'    => $commande->id,
+                    'montant'        => $commande->total,
+                    'date_paiement'  => now(),
+                ]);
+            }
+        }
+
+        return redirect()
+            ->route('commandes.liste')
+            ->with('success', 'Statut de la commande mis à jour avec succès.');
+    }
+
+    /**
+     * Télécharge la facture PDF d'une commande.
+     * Accessible via : GET /admin/commandes/{commande}/facture
+     * Route nommée  : commandes.facture
+     */
+    public function telechargerFacture(Commande $commande)
+    {
+        // Vérifie que la commande est au moins "prête"
+        if (! in_array($commande->statut, ['prete', 'payee'])) {
+            return redirect()
+                ->route('commandes.liste')
+                ->with('error', 'La facture n\'est disponible que pour les commandes prêtes ou payées.');
+        }
+
+        $pdf = Pdf::loadView('admin.commandes.facture', compact('commande'))
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->download('facture-commande-' . $commande->id . '.pdf');
+    }
+
+    // -------------------------------------------------------------------------
+    // Méthode privée : génère et stocke le PDF de facture
+    // -------------------------------------------------------------------------
+    private function genererFacturePdf(Commande $commande): void
+    {
+        $pdf = Pdf::loadView('admin.commandes.facture', compact('commande'))
+            ->setPaper('a4', 'portrait');
+
+        // Stockage dans storage/app/factures/
+        $dossier = storage_path('app/factures');
+        if (! is_dir($dossier)) {
+            mkdir($dossier, 0755, true);
+        }
+
+        $pdf->save($dossier . '/facture-commande-' . $commande->id . '.pdf');
+    }
+
+    public function destroy(Commande $commande)
+    {
+        $commande->delete();
+        return redirect()->route('commandes.liste')
+            ->with('success', 'Commande supprimée avec succès');
     }
 }

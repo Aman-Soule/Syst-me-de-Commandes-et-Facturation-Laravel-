@@ -5,11 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - ISI BURGER</title>
     @vite('resources/css/app.css')
-</head>
-<body class="bg-gray-100 text-gray-900 flex min-h-screen">
+    <style>
+        /* Pour s'assurer que la sidebar reste fixe */
+        .fixed-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
 
-<!-- Barre latérale -->
-<aside class="w-64 bg-gray-900 text-white flex flex-col">
+        .main-content {
+            margin-left: 12rem; /* 64 = 16rem */
+            width: calc(100% - 16rem);
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+<!-- Barre latérale fixe -->
+<aside class="fixed-sidebar w-64 bg-gray-900 text-white flex flex-col">
     <div class="p-6 text-center border-b border-gray-800">
         <h2 class="text-xl font-bold">
             <a href="{{ route('admin.dashboard') }}">Dashboard</a>
@@ -24,9 +41,9 @@
            class="block px-3 py-2 rounded hover:bg-gray-800 transition">
             Commandes
         </a>
-        <a href="#"
+        <a href="{{ route('paiements.liste') }}"
            class="block px-3 py-2 rounded hover:bg-gray-800 transition">
-            Clients
+            Paiements
         </a>
         <a href="#"
            class="block px-3 py-2 rounded hover:bg-gray-800 transition">
@@ -35,8 +52,8 @@
     </nav>
 </aside>
 
-<!-- Contenu principal -->
-<main class="flex-1 p-8">
+<!-- Contenu principal avec défilement -->
+<main class="main-content">
     @yield('dashboard-content')
 </main>
 

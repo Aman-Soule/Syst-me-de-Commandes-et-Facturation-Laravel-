@@ -7,6 +7,11 @@
             {{-- Header avec bouton ajout --}}
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-3xl font-bold text-gray-900">Gestion des Burgers</h1>
+                @if(session('success'))
+                    <div class="bg-green-100 text-green-700 px-4 py-2 rounded mb-4">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <a href="{{ route('burgers.create') }}"
                    class="bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-900 transition">
                     + Ajouter un Burger
@@ -51,7 +56,7 @@
                                    class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition">
                                     Éditer
                                 </a>
-                                <form action="{{ route('burgers.destroy', $burger->id) }}" method="POST" onsubmit="return confirm('Supprimer ce burger ?');">
+                                <form action="{{ route('burgers.destroy', $burger->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"

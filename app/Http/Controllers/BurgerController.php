@@ -108,7 +108,7 @@ class BurgerController extends Controller
             $burger->save();
         }
 
-        return redirect()->route('burgers.index')->with('success', 'Burger mis à jour avec succès');
+        return redirect()->route('burgers.index')-> with('success', 'Burger mis à jour avec succès');
     }
 
 

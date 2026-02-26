@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BurgerController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\PaiementController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,12 +31,17 @@ Route::get('/admin/commandes/{commande}/edit', [AdminController::class, 'edit'])
 Route::put('/admin/commandes/{commande}', [AdminController::class, 'update'])->name('commandes.update');
 Route::delete('/admin/commandes/{commande}', [AdminController::class, 'destroy'])->name('commandes.destroy');
 
+//Paiement
+Route::get('/admin/paiements', [PaiementController::class, 'index'])->name('paiements.liste');
+
+Route::get('commandes/{commande}/facture', [CommandeController::class, 'telechargerFacture'])
+    ->name('commandes.facture');
 
 // Routes pour les commandes côté clients
-//Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
-//Route::get('/commandes/create/{burger}', [CommandeController::class, 'create'])->name('commandes.create');
-//Route::post('/commandes', [CommandeController::class, 'store'])->name('commandes.store');
-//Route::get('/commandes/{commande}', [CommandeController::class, 'show'])->name('commandes.show');
+Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
+Route::get('/commandes/create/{burger}', [CommandeController::class, 'create'])->name('commandes.create');
+Route::post('/commandes', [CommandeController::class, 'store'])->name('commandes.store');
+Route::get('/commandes/{commande}', [CommandeController::class, 'show'])->name('commandes.show');
 //Route::get('/commandes/{commande}/edit', [CommandeController::class, 'edit'])->name('commandes.edit');
 //Route::put('/commandes/{commande}', [CommandeController::class, 'update'])->name('commandes.update');
 //Route::delete('/commandes/{commande}', [CommandeController::class, 'destroy'])->name('commandes.destroy');

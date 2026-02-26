@@ -7,6 +7,11 @@
             {{-- Header --}}
             <h1 class="text-3xl font-bold text-blue-900 mb-6">Ajouter un Burger</h1>
 
+            @if(session('success'))
+                <div class="bg-green-100 text-green-700 px-4 py-2 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
             {{-- Formulaire --}}
             <div class="bg-white shadow-md rounded-lg p-6">
                 <form action="{{ route('burgers.store') }}" method="POST" enctype="multipart/form-data">
