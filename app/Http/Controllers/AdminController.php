@@ -163,9 +163,7 @@ class AdminController extends Controller
             }
         }
 
-        return redirect()
-            ->route('commandes.liste')
-            ->with('success', 'Statut de la commande mis à jour avec succès.');
+        return back()->with('success', 'Statut de la commande mis à jour avec succès.');
     }
 
     /**
@@ -188,9 +186,8 @@ class AdminController extends Controller
         return $pdf->download('facture-commande-' . $commande->id . '.pdf');
     }
 
-    // -------------------------------------------------------------------------
+
     // Méthode privée : génère et stocke le PDF de facture
-    // -------------------------------------------------------------------------
     private function genererFacturePdf(Commande $commande): void
     {
         $pdf = Pdf::loadView('admin.commandes.facture', compact('commande'))

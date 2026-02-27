@@ -34,7 +34,7 @@ Route::delete('/admin/commandes/{commande}', [AdminController::class, 'destroy']
 //Paiement
 Route::get('/admin/paiements', [PaiementController::class, 'index'])->name('paiements.liste');
 
-Route::get('commandes/{commande}/facture', [CommandeController::class, 'telechargerFacture'])
+Route::get('commandes/{commande}/facture', [AdminController::class, 'telechargerFacture'])
     ->name('commandes.facture');
 
 // Routes pour les commandes côté clients
