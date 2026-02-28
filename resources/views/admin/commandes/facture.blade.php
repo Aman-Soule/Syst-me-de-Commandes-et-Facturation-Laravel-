@@ -216,7 +216,7 @@
 <!-- En-tête -->
 <div class="header">
     <div class="header-left">
-        <div class="logo-text">🍔 ISI BURGER</div>
+        <div class="logo-text">ISI BURGER</div>
         <div class="logo-sub">Restaurant – Fast Food</div>
     </div>
     <div class="header-right">
@@ -239,6 +239,14 @@
     <div class="infos-col">
         <div class="infos-box" style="margin-right: 0; margin-left: 15px;">
             <h3>Détails commande</h3>
+            @foreach($commande->burgers as $burger)
+            <p class="label">Burger</p>
+            <p>{{ $burger->nom }}</p>
+
+            <p class="label">Quantité</p>
+            <p>{{ $burger->pivot->quantite }}</p>
+            @endforeach
+
             <p class="label">Date de commande</p>
             <p>{{ $commande->created_at->format('d/m/Y à H:i') }}</p>
             <p class="label" style="margin-top: 6px;">Statut</p>
@@ -256,6 +264,7 @@
 <table class="articles">
     <thead>
     <tr>
+        <th>#</th>
         <th>Désignation</th>
         <th>Qté</th>
         <th>Prix unitaire</th>
@@ -263,25 +272,15 @@
     </tr>
     </thead>
     <tbody>
-    {{-- Affichage des lignes de commande si relation disponible --}}
-    @if($commande->lignes && $commande->lignes->count() > 0)
-        @foreach($commande->lignes as $ligne)
-            <tr>
-                <td>{{ $ligne->burger->nom ?? 'Article' }}</td>
-                <td>{{ $ligne->quantite }}</td>
-                <td>{{ number_format($ligne->prix_unitaire, 0, ',', ' ') }} FCFA</td>
-                <td>{{ number_format($ligne->quantite * $ligne->prix_unitaire, 0, ',', ' ') }} FCFA</td>
-            </tr>
-        @endforeach
-    @else
-        {{-- Fallback si pas de relation lignes --}}
-        <tr>
+     <tr>
             <td>Commande #{{ str_pad($commande->id, 6, '0', STR_PAD_LEFT) }}</td>
-            <td>1</td>
-            <td>{{ number_format($commande->total, 0, ',', ' ') }} FCFA</td>
+            @foreach($commande->burgers as $burger)
+            <td>{{ $burger->nom }}</td>
+            <td>{{ $burger->pivot->quantite }}</td>
+            <td>{{ $burger->prix_unitaire }} FCFA</td>
+            @endforeach
             <td>{{ number_format($commande->total, 0, ',', ' ') }} FCFA</td>
         </tr>
-    @endif
     </tbody>
 </table>
 

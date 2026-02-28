@@ -96,6 +96,9 @@
                         <tr>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Client</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Téléphone</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Produits</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Quantité</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Prix unitaire</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Statut</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Total</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Date</th>
@@ -114,6 +117,18 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 text-gray-600">{{ $commande->telephone_client }}</td>
+                                @foreach($commande->burgers as $burger)
+                                <td class="px-6 py-4 text-gray-600">
+                                    {{ $burger->nom }}<br>
+                                </td>
+                                <td class="px-6 py-4 text-gray-600">
+                                    {{ $burger->pivot ->quantite }}<br>
+                                </td>
+                                    <td class="px-6 py-4 text-gray-600">
+                                    {{ $burger->prix_unitaire }}<br>
+                                </td>
+                                @endforeach
+
                                 <td class="px-6 py-4">
                                         <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
                                             @if($commande->statut == 'en_attente') bg-yellow-100 text-yellow-800

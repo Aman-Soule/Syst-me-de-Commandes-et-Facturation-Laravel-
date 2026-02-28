@@ -2,11 +2,22 @@
 @extends('admin/dashboard_template')
 
 @section('dashboard-content')
+    <!-- En-tête -->
+    <div class="bg-white rounded-xl shadow-sm p-6 flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">Modifier la Burger #{{ $burger->id }}</h1>
+            <p class="text-gray-500 mt-1">Mise à jour des informations du burger</p>
+        </div>
+        <a href="{{ route('burgers.index') }}"
+           class="flex items-center space-x-2 text-sm text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            <span>Retour aux stocks</span>
+        </a>
+    </div>
     <div class="bg-gray-100 min-h-screen py-10">
         <div class="container mx-auto px-6">
-
-            <h1 class="text-3xl font-bold text-blue-900 mb-6">Modifier le Burger</h1>
-
             <div class="bg-white shadow-md rounded-lg p-6">
                 <form action="{{ route('burgers.update', $burger->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -38,7 +49,7 @@
                     {{-- Stock (ajout uniquement) --}}
                     <div class="mb-4">
                         <label for="ajout_stock" class="block text-gray-700 font-semibold mb-2">Ajouter au stock</label>
-                        <input type="number" name="ajout_stock" id="ajout_stock" value="0"
+                        <input type="number" name="ajout_stock" id="ajout_stock" value=""
                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-900">
                         <p class="text-sm text-gray-500 mt-1">Stock actuel : {{ $burger->quantite_stock }}</p>
                     </div>

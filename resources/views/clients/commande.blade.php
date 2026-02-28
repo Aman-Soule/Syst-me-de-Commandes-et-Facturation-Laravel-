@@ -32,13 +32,20 @@
 
             <!-- Formulaire de commande -->
             <div class="bg-white rounded-lg shadow-md p-6">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul> @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach </ul>
+                    </div>
+                @endif
                 <form method="POST" action="{{ route('commandes.store') }}">
                     @csrf
                     <input type="hidden" name="burgers[0][id]" value="{{ $burger->id }}">
 
                     <div class="mb-4">
                         <label class="block text-gray-700 font-medium mb-1">Quantité</label>
-                        <input type="number" name="burgers[0][quantite]" value="1" min="1"
+                        <input type="number" name="burgers[0][quantite]" min="1"
                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
 

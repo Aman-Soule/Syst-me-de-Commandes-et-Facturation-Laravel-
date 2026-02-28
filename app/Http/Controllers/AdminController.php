@@ -20,6 +20,8 @@ class AdminController extends Controller
     {
         $today = Carbon::today();
 
+        $commandes = commande::all();
+
         $totalCommandes         = Commande::count();
         $commandesEnAttente     = Commande::where('statut', 'en_attente')->count();
         $commandesEnPreparation = Commande::where('statut', 'en_preparation')->count();
@@ -48,13 +50,8 @@ class AdminController extends Controller
         $stockTotal       = burgers::sum('quantite_stock');
         $burgers          = burgers::all();
 
-        //stats commandes
 
-        $commandes = commande::all();
 
-        // ── Données graphiques ────────────────────────────────────────────────
-
-        // 1. Commandes & recettes par mois sur les 12 derniers mois
         $moisLabels      = [];
         $chartCommandesMois = [];
         $chartRecettesMois  = [];
@@ -121,7 +118,10 @@ class AdminController extends Controller
      */
     public function commandes()
     {
-        $commandes = Commande::with('burgers')->latest()->get();
+        $commandes = Commande::with('burgers')
+            ->where('statut', '!=', 'payee')
+            ->latest()
+            ->get();
         return view('admin.commandes.liste', compact('commandes'));
     }
 
