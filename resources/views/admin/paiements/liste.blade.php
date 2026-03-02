@@ -17,7 +17,7 @@
             <!-- Carte des paiements -->
             <div class="bg-white rounded-xl shadow-md overflow-hidden">
                 <!-- En-tête bleu marine -->
-                <div class="bg-blue-900 px-6 py-3">
+                <div class="bg-gray-900 px-6 py-3">
                     <h2 class="text-white font-medium">Historique des paiements</h2>
                 </div>
 

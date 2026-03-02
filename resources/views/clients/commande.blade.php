@@ -32,41 +32,56 @@
 
             <!-- Formulaire de commande -->
             <div class="bg-white rounded-lg shadow-md p-6">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul> @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach </ul>
-                    </div>
-                @endif
-                <form method="POST" action="{{ route('commandes.store') }}">
+{{--                @if ($errors->any())--}}
+{{--                    <div class="alert alert-danger">--}}
+{{--                        <ul>--}}
+{{--                            @foreach ($errors->all() as $error)--}}
+{{--                                <li>{{ $error }}</li>--}}
+{{--                            @endforeach--}}
+{{--                        </ul>--}}
+{{--                    </div>--}}
+{{--                @endif--}}
+
+                <form method="POST" action="{{ route('commandes.store') }}" novalidate>
                     @csrf
                     <input type="hidden" name="burgers[0][id]" value="{{ $burger->id }}">
 
                     <div class="mb-4">
                         <label class="block text-gray-700 font-medium mb-1">Quantité</label>
-                        <input type="number" name="burgers[0][quantite]" min="1"
+                        <input type="number" name="burgers[0][quantite]"
+                               value="{{ old('burgers.0.quantite') }}" min="1"
                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        @error('burgers.0.quantite')
+                        <div class="text-red-700 text-sm mt-1">{{ $message }}</div>
+                        @enderror
+
                     </div>
 
                     <div class="mb-4">
                         <label class="block text-gray-700 font-medium mb-1">Nom du client</label>
-                        <input type="text" name="nom_client" required
+                        <input type="text" name="nom_client" value="{{ old('nom_client') }}" required
                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        @error('nom_client')
+                        <div class="text-red-700 text-sm mt-1">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-4">
                         <label class="block text-gray-700 font-medium mb-1">Téléphone</label>
-                        <input type="text" name="telephone_client" required
+                        <input type="text" name="telephone_client" value="{{ old('telephone_client') }}" required
                                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        @error('telephone_client')
+                        <div class="text-red-700 text-sm mt-1">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <button type="submit"
-                            class="w-full bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-800 transition">
+                            class="w-full bg-gray-900 text-white px-4 py-2 rounded hover:bg-blue-800 transition">
                         Valider la commande
                     </button>
                 </form>
             </div>
+
         </div>
     </div>
 @endsection

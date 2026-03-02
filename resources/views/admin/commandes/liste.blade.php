@@ -85,7 +85,7 @@
             <!-- Carte principale des commandes -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                 <!-- En-tête de la carte -->
-                <div class="bg-blue-900 px-6 py-4 flex justify-between items-center">
+                <div class="bg-gray-900 px-6 py-4 flex justify-between items-center">
                     <h2 class="text-white font-semibold text-lg">Toutes les commandes</h2>
                 </div>
 

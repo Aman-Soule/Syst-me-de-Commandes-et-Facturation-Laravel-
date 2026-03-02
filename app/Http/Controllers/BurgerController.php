@@ -64,20 +64,40 @@ class BurgerController extends Controller
             'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
             'description' => 'nullable|string',
             'quantite_stock' => 'required|integer|min:0',
+        ], [
+            'nom.required' => 'Le nom du burger est obligatoire.',
+            'nom.string' => 'Le nom doit être une chaîne de caractères.',
+            'nom.max' => 'Le nom ne doit pas dépasser 255 caractères.',
+
+            'prix_unitaire.required' => 'Le prix unitaire est obligatoire.',
+            'prix_unitaire.numeric' => 'Le prix unitaire doit être un nombre.',
+
+            'image.required' => 'L’image du burger est obligatoire.',
+            'image.image' => 'Le fichier doit être une image.',
+            'image.mimes' => 'L’image doit être au format jpg, jpeg ou png.',
+            'image.max' => 'La taille de l’image ne doit pas dépasser 2 Mo.',
+
+            'description.string' => 'La description doit être une chaîne de caractères.',
+
+            'quantite_stock.required' => 'La quantité en stock est obligatoire.',
+            'quantite_stock.integer' => 'La quantité en stock doit être un nombre entier.',
+            'quantite_stock.min' => 'La quantité en stock ne peut pas être négative.',
         ]);
 
         // Sauvegarde de l’image dans storage/app/public/images
         $path = $request->file('image')->store('images', 'public');
+
         burgers::create([
             'nom' => $request->nom,
             'prix_unitaire' => $request->prix_unitaire,
-            'image' => $path, // on stocke juste le chemin relatif
+            'image' => $path,
             'description' => $request->description,
             'quantite_stock' => $request->quantite_stock,
         ]);
 
         return redirect()->route('burgers.index')->with('success', 'Burger ajouté avec succès');
     }
+
 
 // Formulaire d’édition
     public function edit(burgers $burger)

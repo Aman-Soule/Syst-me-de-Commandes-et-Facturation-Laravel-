@@ -65,7 +65,7 @@
                     {{-- Bouton --}}
                     <div class="flex justify-end">
                         <button type="submit"
-                                class="bg-blue-900 text-white px-6 py-2 rounded hover:bg-blue-800 transition">
+                                class="bg-gray-900 text-white px-6 py-2 rounded hover:bg-blue-800 transition">
                             Mettre à jour
                         </button>
                     </div>
