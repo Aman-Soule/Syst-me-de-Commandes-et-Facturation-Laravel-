@@ -5,41 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISI BURGER</title>
     @vite('resources/css/app.css')
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
-<body class="bg-gray-100 text-gray-900 flex flex-col min-h-screen">
+<body class="bg-gray-100 text-gray-900" style="overflow-x: hidden;">
 
-{{-- Header avec bleu très foncé (gray-900) --}}
+{{-- Header --}}
 <header class="bg-gray-900 text-white shadow-lg border-b border-gray-800">
     <div class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
+
+            {{-- Logo + Titre --}}
             <div class="flex items-center space-x-3">
-                <img src="{{ asset('storage/logos/burger-logo.png') }}"class="img-fluid" style="height: 60px; width: auto;">
-                <h1 class="text-3xl font-extrabold tracking-tight text-white">ISI BURGER</h1>
+                <a href="{{ route('welcome') }}">
+                    <img src="{{ asset('storage/logos/burger-logo.png') }}" class="img-fluid" style="height: 60px; width: auto;">
+                    <h1 class="text-xl font-extrabold tracking-tight text-white">ISI BURGER</h1>
+                </a>
             </div>
-            <nav class="space-x-6">
+
+            {{-- Nav desktop (masquée sur mobile) --}}
+            <nav class="hidden md:flex space-x-6">
                 <a href="{{ url('/') }}" class="text-gray-300 hover:text-yellow-500 transition duration-300 font-medium">Accueil</a>
-                <a href="{{route('clients.catalogue')}}" class="text-gray-300 hover:text-yellow-500 transition duration-300 font-medium">Catalogue</a>
+                <a href="{{ route('clients.catalogue') }}" class="text-gray-300 hover:text-yellow-500 transition duration-300 font-medium">Catalogue</a>
                 <a href="#" class="text-gray-300 hover:text-yellow-500 transition duration-300 font-medium">Commandes</a>
-                <a href="{{route('admin.dashboard')}}" class="text-gray-300 hover:text-yellow-500 transition duration-300 font-medium">Gestion</a>
+                <a href="{{ route('admin.dashboard') }}" class="text-gray-300 hover:text-yellow-500 transition duration-300 font-medium">Gestion</a>
             </nav>
+
+            {{-- Bouton MENU mobile --}}
+            <button
+                onclick="openMenu()"
+                class="md:hidden flex items-center gap-2 text-gray-300 hover:text-yellow-500 transition duration-300 font-bold tracking-widest text-sm uppercase">
+                MENU
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                          d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+
         </div>
     </div>
 </header>
 
-<main class="container mx-auto px-6 py-8 flex-grow">
+{{-- ===== MODAL MENU MOBILE ===== --}}
+<div id="menu-modal" role="dialog" aria-modal="true" aria-label="Menu navigation">
+
+    <div id="menu-backdrop" onclick="closeMenu()"></div>
+
+    <div id="menu-box">
+        <button id="menu-close" onclick="closeMenu()" aria-label="Fermer le menu">&times;</button>
+
+        <p class="menu-modal-title">MENU</p>
+
+        <nav>
+            <a href="{{ url('/') }}" onclick="closeMenu()">Accueil</a>
+            <a href="{{ route('clients.catalogue') }}" onclick="closeMenu()">Catalogue</a>
+            <a href="#" onclick="closeMenu()">Commandes</a>
+            <a href="{{ route('admin.dashboard') }}" onclick="closeMenu()">Gestion</a>
+        </nav>
+    </div>
+
+</div>
+
+{{-- ===== CONTENU PRINCIPAL ===== --}}
+<main class="flex-grow">
     @yield('content')
 </main>
 
-{{-- Footer --}}
+{{-- ===== FOOTER ===== --}}
 <footer class="bg-gray-900 text-white mt-auto border-t border-gray-800">
-    {{-- Section principale --}}
+
     <div class="container mx-auto px-6 py-12">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
 
             {{-- Colonne 1 : Logo et description --}}
             <div class="space-y-4">
                 <div class="flex items-center space-x-2">
-                    <img src="{{ asset('storage/logos/burger-logo.png') }}"class="img-fluid" style="height: 60px; width: auto;">
+                    <img src="{{ asset('storage/logos/burger-logo.png') }}" class="img-fluid" style="height: 60px; width: auto;">
                     <h2 class="text-2xl font-bold text-white">ISI BURGER</h2>
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed">
@@ -118,6 +158,7 @@
                     <li><a href="#" class="text-gray-400 hover:text-yellow-500 transition block py-1">Recrutement</a></li>
                 </ul>
             </div>
+
         </div>
     </div>
 
@@ -133,25 +174,23 @@
             </div>
         </div>
     </div>
+
 </footer>
 
-{{-- Style pour le footer collé --}}
-<style>
-    body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
+{{-- ===== SCRIPT MODAL ===== --}}
+<script>
+    function openMenu() {
+        document.getElementById('menu-modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
     }
-    main {
-        flex: 1 0 auto;
+    function closeMenu() {
+        document.getElementById('menu-modal').classList.remove('open');
+        document.body.style.overflow = '';
     }
-    footer {
-        flex-shrink: 0;
-    }
-    .bg-gray-950 {
-        background-color: #0a0c10;
-    }
-</style>
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeMenu();
+    });
+</script>
 
 </body>
 </html>

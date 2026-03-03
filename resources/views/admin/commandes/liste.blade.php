@@ -110,10 +110,7 @@
                             <tr class="hover:bg-gray-50 transition duration-200">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center">
-                                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                                            <span class="text-blue-900 font-semibold text-sm">{{ strtoupper(substr($commande->nom_client, 0, 2)) }}</span>
-                                        </div>
-                                        <span class="font-medium text-gray-900">{{ $commande->nom_client }}</span>
+                                            <span class="font-medium text-gray-900">{{ $commande->nom_client }}</span>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 text-gray-600">{{ $commande->telephone_client }}</td>
@@ -143,7 +140,7 @@
                                             @endswitch
                                         </span>
                                 </td>
-                                <td class="px-6 py-4 font-medium text-gray-900">{{ number_format($commande->total, 0, ',', ' ') }} FCFA</td>
+                                <td class="px-12 py-4 font-medium text-gray-900">{{ number_format($commande->total, 0, ',', ' ') }}</td>
                                 <td class="px-6 py-4 text-gray-600">{{ $commande->created_at->format('d/m/Y H:i') }}</td>
                                 <td class="px-6 py-4">
                                     <div class="flex space-x-2">
