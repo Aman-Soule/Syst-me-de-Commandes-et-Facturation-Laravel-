@@ -20,7 +20,10 @@ class AdminController extends Controller
     {
         $today = Carbon::today();
 
-        $commandes = commande::all();
+        $commandes = Commande::orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
 
         $totalCommandes         = Commande::count();
         $commandesEnAttente     = Commande::where('statut', 'en_attente')->count();
@@ -201,6 +204,23 @@ class AdminController extends Controller
 
         $pdf->save($dossier . '/facture-commande-' . $commande->id . '.pdf');
     }
+
+    public function ouvrirFacture(Commande $commande)
+    {
+        // Vérifie que la commande est au moins "prête"
+        if (! in_array($commande->statut, ['prete', 'payee'])) {
+            return redirect()
+                ->route('commandes.liste')
+                ->with('error', 'La facture n\'est disponible que pour les commandes prêtes ou payées.');
+        }
+
+        $pdf = Pdf::loadView('admin.commandes.facture', compact('commande'))
+            ->setPaper('a4', 'portrait');
+
+        // Affiche directement le PDF dans le navigateur
+        return $pdf->stream('facture-commande-' . $commande->id . '.pdf');
+    }
+
 
     public function destroy(Commande $commande)
     {

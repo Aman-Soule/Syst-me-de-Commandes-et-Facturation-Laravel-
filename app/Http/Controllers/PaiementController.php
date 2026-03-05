@@ -10,7 +10,7 @@ class PaiementController extends Controller
 {
     public function index()
     {
-        $paiements = Paiement::with('commande')->latest()->get();
+        $paiements = Paiement::with('commande')->latest()->paginate(10);
         return view('admin.paiements.liste', compact('paiements'));
     }
 

@@ -210,6 +210,7 @@
             margin-top: 20px;
         }
     </style>
+    <title>Facture</title>
 </head>
 <body>
 
@@ -249,12 +250,6 @@
 
             <p class="label">Date de commande</p>
             <p>{{ $commande->created_at->format('d/m/Y à H:i') }}</p>
-            <p class="label" style="margin-top: 6px;">Statut</p>
-            <p>
-                    <span class="statut-badge {{ $commande->statut === 'payee' ? 'statut-payee' : 'statut-prete' }}">
-                        {{ $commande->statut === 'payee' ? 'Payée' : 'Prête' }}
-                    </span>
-            </p>
         </div>
     </div>
 </div>

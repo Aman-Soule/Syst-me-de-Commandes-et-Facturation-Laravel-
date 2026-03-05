@@ -37,6 +37,9 @@ Route::get('/admin/paiements', [PaiementController::class, 'index'])->name('paie
 Route::get('commandes/{commande}/facture', [AdminController::class, 'telechargerFacture'])
     ->name('commandes.facture');
 
+Route::get('commandes/{commande}/facture/ouvrir', [AdminController::class, 'ouvrirFacture'])
+    ->name('commandes.ouvrirFacture');
+
 // Routes pour les commandes côté clients
 Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
 Route::get('/commandes/create/{burger}', [CommandeController::class, 'create'])->name('commandes.create');

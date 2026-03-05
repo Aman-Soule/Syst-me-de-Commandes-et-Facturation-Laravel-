@@ -134,7 +134,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <!-- Statuts détaillés -->
             <div class="bg-white rounded-xl shadow-sm p-5">
-                <h3 class="text-sm font-semibold text-gray-700 mb-4">📌 Statuts des commandes</h3>
+                <h3 class="text-sm font-semibold text-gray-700 mb-4">Statuts des commandes</h3>
                 <div class="space-y-3">
                     <div class="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
                         <div class="flex items-center space-x-2">
@@ -169,7 +169,7 @@
 
             <!-- Aperçu stock -->
             <div class="bg-white rounded-xl shadow-sm p-5">
-                <h3 class="text-sm font-semibold text-gray-700 mb-4">📦 Aperçu du stock</h3>
+                <h3 class="text-sm font-semibold text-gray-700 mb-4">Aperçu du stock</h3>
                 <div class="space-y-3">
                     <div class="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
                         <span class="text-sm text-gray-600">Total unités</span>
