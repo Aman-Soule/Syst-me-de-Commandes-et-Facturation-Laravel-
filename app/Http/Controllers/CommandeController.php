@@ -81,8 +81,7 @@ class CommandeController extends Controller
         if (isset($commande)) {
             $commande->update(['total' => $total]);
 
-            return redirect()->route('clients.catalogue', $commande->id)
-                ->with('success', 'Commande créée avec succès');
+            return redirect()->route('commandes.confirmation', $commande->id);
         }
 
         return back()->withErrors("Impossible de créer la commande.")->withInput();
