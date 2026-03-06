@@ -5,120 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - ISI BURGER</title>
     @vite('resources/css/app.css')
-    <style>
-        /* ===== LAYOUT DE BASE ===== */
-        body {
-            margin: 0;
-            background: #f3f4f6;
-        }
-
-        /* ===== SIDEBAR ===== */
-        #sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: 16rem;           /* 256px */
-            background: #111827;   /* gray-900 */
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            z-index: 200;
-            transition: transform 0.3s ease;
-            overflow-y: auto;
-        }
-
-        /* Sur desktop : sidebar toujours visible */
-        @media (min-width: 768px) {
-            #sidebar {
-                transform: translateX(0) !important;
-            }
-            #sidebar-backdrop {
-                display: none !important;
-            }
-        }
-
-        /* Sur mobile : sidebar cachée par défaut, revealed via classe .open */
-        @media (max-width: 767px) {
-            #sidebar {
-                transform: translateX(-100%);
-            }
-            #sidebar.open {
-                transform: translateX(0);
-            }
-        }
-
-        /* ===== BACKDROP (mobile seulement) ===== */
-        #sidebar-backdrop {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.55);
-            z-index: 199;
-            backdrop-filter: blur(2px);
-        }
-        #sidebar-backdrop.open {
-            display: block;
-        }
-
-        /* ===== TOPBAR MOBILE ===== */
-        #mobile-topbar {
-            display: none;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: #111827;
-            color: #fff;
-            padding: 0.9rem 1.25rem;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #1f2937;
-        }
-        @media (max-width: 767px) {
-            #mobile-topbar {
-                display: flex;
-            }
-        }
-
-        /* ===== CONTENU PRINCIPAL ===== */
-        #main-content {
-            margin-left: 16rem;   /* correspond à la largeur de la sidebar */
-            min-height: 100vh;
-            padding: 1.5rem;
-        }
-
-        /* Sur mobile : plus de marge, contenu pleine largeur */
-        @media (max-width: 767px) {
-            #main-content {
-                margin-left: 0;
-                padding: 1rem;
-            }
-        }
-
-        /* ===== LIENS SIDEBAR ===== */
-        .sidebar-link {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.6rem 0.9rem;
-            border-radius: 0.5rem;
-            color: #d1d5db;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: background 0.18s, color 0.18s;
-        }
-        .sidebar-link:hover,
-        .sidebar-link.active {
-            background: #1f2937;
-            color: #fbbf24;
-        }
-        .sidebar-link svg {
-            flex-shrink: 0;
-            width: 1.1rem;
-            height: 1.1rem;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/admin_style.css') }}">
 </head>
 <body>
 
@@ -187,18 +74,14 @@
             Paiements
         </a>
 
-        <a href="#" class="sidebar-link">
+        <a href="{{ route('archives.index') }}" class="sidebar-link">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
             </svg>
-            Paramètres
+            Archives
         </a>
         <a href="{{ route('welcome') }}" class="sidebar-link">
-{{--            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">--}}
-{{--                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>--}}
-{{--                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>--}}
-{{--            </svg>--}}
             Accueil
         </a>
     </nav>
@@ -215,7 +98,6 @@
     @yield('dashboard-content')
 </main>
 
-{{-- SCRIPT SIDEBAR MOBILE --}}
 <script>
     function openSidebar() {
         document.getElementById('sidebar').classList.add('open');

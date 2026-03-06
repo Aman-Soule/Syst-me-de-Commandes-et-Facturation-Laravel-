@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\BurgerController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\PaiementController;
@@ -55,3 +56,20 @@ Route::get('/commandes/{commande}/confirmation', function (Commande $commande) {
 //Route::get('/commandes/{commande}/edit', [CommandeController::class, 'edit'])->name('commandes.edit');
 //Route::put('/commandes/{commande}', [CommandeController::class, 'update'])->name('commandes.update');
 //Route::delete('/commandes/{commande}', [CommandeController::class, 'destroy'])->name('commandes.destroy');
+
+
+
+
+// Page des archives
+Route::get('/admin/archives', [ArchiveController::class, 'index'])->name('archives.index');
+
+// Archiver (supprimer → archive) — reçoit un $id
+Route::delete('/admin/burgers/{id}/archiver',    [ArchiveController::class, 'archiverBurger'])->name('burgers.archiver');
+Route::delete('/admin/commandes/{id}/archiver',  [ArchiveController::class, 'archiverCommande'])->name('commandes.archiver');
+// Restaurer depuis les archives
+Route::post('/admin/archives/burgers/{archive}/restaurer',   [ArchiveController::class, 'restaurerBurger'])->name('archives.burgers.restaurer');
+Route::post('/admin/archives/commandes/{archive}/restaurer', [ArchiveController::class, 'restaurerCommande'])->name('archives.commandes.restaurer');
+
+// Supprimer définitivement une archive
+Route::delete('/admin/archives/burgers/{archive}',   [ArchiveController::class, 'supprimerBurgerArchive'])->name('archives.burgers.supprimer');
+Route::delete('/admin/archives/commandes/{archive}', [ArchiveController::class, 'supprimerCommandeArchive'])->name('archives.commandes.supprimer');
