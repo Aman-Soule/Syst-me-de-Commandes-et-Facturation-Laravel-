@@ -161,7 +161,7 @@
                             <div class="flex items-center {{ $i < count($etapes) - 1 ? 'flex-1' : '' }}">
                                 <div class="flex flex-col items-center">
                                     <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold
-                                        {{ $i <= $currentIndex ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-400' }}">
+                                        {{ $i <= $currentIndex ? 'bg-gray-900 README.md-white' : 'bg-gray-100 README.md-gray-400' }}">
                                         @if($i < $currentIndex)
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
@@ -170,7 +170,7 @@
                                             {{ $i + 1 }}
                                         @endif
                                     </div>
-                                    <span class="text-xs mt-1 text-center {{ $i <= $currentIndex ? 'text-gray-900 font-medium' : 'text-gray-400' }} w-16">
+                                    <span class="text-xs mt-1 text-center {{ $i <= $currentIndex ? 'README.md-gray-900 font-medium' : 'README.md-gray-400' }} w-16">
                                         {{ $labels[$i] }}
                                     </span>
                                 </div>
